@@ -12,33 +12,33 @@ confirm("YO YO YO \nYOU KNOW WHO IT IZ \nYOU NEED 2 PEOPLES TO PLAY DIS TURNT-BA
 
 
 var winCom = [
-//    0
+  //    0
   [0, 1, 2],
-//    1
+  //    1
   [3, 4, 5],
-//    2
+  //    2
   [6, 7, 8],
-//    3
+  //    3
   [0, 3, 6],
-//    4
+  //    4
   [1, 4, 7],
-//    5
+  //    5
   [2, 5, 8],
-//    6
+  //    6
   [0, 4, 8],
-//    7
+  //    7
   [2, 4, 6]
 ];
 
-function iNit () {
+function iNit() {
   var sQ = document.querySelectorAll(".square");
   var totalTurns = 0;
 
   // Includes function to reset board (to be called upon winner found) and
   function reset() {
     for (i = 0; i < sQ.length; i++) {
-    sQ[i].innerText = null;
-    totalTurns = 0;
+      sQ[i].innerText = null;
+      totalTurns = 0;
     }
   }
   document.getElementById("quickrs").addEventListener("click", reset);
@@ -46,44 +46,45 @@ function iNit () {
 
   // Includes turn-based input of either "x" or "o"
   for (i = 0; i < sQ.length; i++) {
-      sQ[i].addEventListener("click", function() {
-          if (this.innerText == "x" || this.innerText == "o") {
-            var hammerTime = new Audio("/assets/audio/mchammer.mp3");
-            hammerTime.play();
-            alert("AYE YO \nDAS UNCOOL");
-          } else if (totalTurns % 2 == 0) {
-            this.className = "square butcher";
-            this.innerText = "o";
-            totalTurns++;
-            cx();
-          } else {
-            this.className = "square hana";
-            this.innerText = "x";
-            totalTurns++;
-            cx();
+    sQ[i].addEventListener("click", function() {
+      if (this.innerText == "x" || this.innerText == "o") {
+        var hammerTime = new Audio("/assets/audio/mchammer.mp3");
+        hammerTime.play();
+        alert("AYE YO \nDAS UNCOOL");
+      } else if (totalTurns % 2 == 0) {
+        this.className = "square butcher";
+        this.innerText = "o";
+        totalTurns++;
+        cx();
+      } else {
+        this.className = "square hana";
+        this.innerText = "x";
+        totalTurns++;
+        cx();
+      }
+
+
+      // Includes the loop to search for a winner among the 8 possibilities
+      function cx() {
+        var heReallyHelpedMe = winCom.length;
+        for (i = 0; i < heReallyHelpedMe; i++) {
+          if ((sQ[winCom[i][0]].innerText == "x") && (sQ[winCom[i][1]].innerText == "x") && (sQ[winCom[i][2]].innerText == "x")) {
+            alert("X \GON\" GIVE IT YA!");
+            reset();
+          } else if ((sQ[winCom[i][0]].innerText == "o") && (sQ[winCom[i][1]].innerText == "o") && (sQ[winCom[i][2]].innerText == "o")) {
+            alert("o0O0o\nYEA");
+            reset();
           }
+        } //end of for loop
+
+        // check for draw if all squares have input
+        if (totalTurns === 9) {
+          alert("\"D\" to the \"R\" to the \"A\" to the \"W\"");
+          reset();
+        }
 
 
-            // Includes the loop to search for a winner among the 8 possibilities
-            function cx() {
-              var heReallyHelpedMe = winCom.length;
-              for (i = 0; i < heReallyHelpedMe; i++) {
-                if ((sQ[winCom[i][0]].innerText == "x") && (sQ[winCom[i][1]].innerText == "x") && (sQ[winCom[i][2]].innerText == "x")) {
-                alert("X \GON\" GIVE IT YA!");
-                reset();
-                } else if ((sQ[winCom[i][0]].innerText == "o") && (sQ[winCom[i][1]].innerText == "o") && (sQ[winCom[i][2]].innerText == "o")) {
-                  alert("o0O0o\nYEA");
-                  reset();
-                }
-              } //end of for loop
-
-              if (totalTurns === 9) {
-                alert("\"D\" to the \"R\" to the \"A\" to the \"W\"");
-                reset();
-                }
-
-
-            }
+      }
 
     });
   }
